@@ -2,6 +2,7 @@ package com.example.mobilt_java22_shkelqim_gashi_lifecycle_v3_master
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -10,17 +11,24 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class RegisterActivity : AppCompatActivity() {
+
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var usernameInput: EditText
+    private lateinit var passwordInput: EditText
+    private lateinit var emailInput: EditText
+    private lateinit var ssnInput: EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        val usernameInput = findViewById<EditText>(R.id.usernameInput)
-        val passwordInput = findViewById<EditText>(R.id.passwordInput)
-        val emailInput = findViewById<EditText>(R.id.emailInput)
-        val ssnInput = findViewById<EditText>(R.id.ssnInput)
+        usernameInput = findViewById(R.id.usernameInput)
+        passwordInput = findViewById(R.id.passwordInput)
+        emailInput = findViewById(R.id.emailInput)
+        ssnInput = findViewById(R.id.ssnInput)
         val registerButton = findViewById<Button>(R.id.registerButton)
 
-        val sharedPreferences = getSharedPreferences("MyApp", Context.MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences("MyApp", Context.MODE_PRIVATE)
 
         val savedUsername = sharedPreferences.getString("username", "")
         val savedPassword = sharedPreferences.getString("password", "")
@@ -38,24 +46,11 @@ class RegisterActivity : AppCompatActivity() {
 
 
         registerButton.setOnClickListener {
-            val username = usernameInput.text.toString()
-            val password = passwordInput.text.toString()
             val email = emailInput.text.toString()
-            val ssn = ssnInput.text.toString()
-
-
-            val editor = sharedPreferences.edit()
-
-            editor.putString("username", username)
-            editor.putString("password", password)
-            editor.putString("email", email)
-            editor.putString("ssn", ssn)
-            editor.apply()
-
+            val username = usernameInput.text.toString()
             usernameDisplay.text = "Username: $username"
             emailDisplay.text = "Email: $email"
         }
-
 
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
@@ -66,14 +61,50 @@ class RegisterActivity : AppCompatActivity() {
                     startActivity(intent)
                     true
                 }
+
                 R.id.nav_register -> true
                 R.id.nav_acc_info -> {
                     val intent = Intent(this, AccInfoActivity::class.java)
                     startActivity(intent)
                     true
                 }
+
                 else -> false
             }
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        val username = usernameInput.text.toString()
+        val password = passwordInput.text.toString()
+        val email = emailInput.text.toString()
+        val ssn = ssnInput.text.toString()
+
+        val editor = sharedPreferences.edit()
+
+        editor.putString("username", username)
+        editor.putString("password", password)
+        editor.putString("email", email)
+        editor.putString("ssn", ssn)
+        editor.apply()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        val username = usernameInput.text.toString()
+        val password = passwordInput.text.toString()
+        val email = emailInput.text.toString()
+        val ssn = ssnInput.text.toString()
+
+        val editor = sharedPreferences.edit()
+
+        editor.putString("username", username)
+        editor.putString("password", password)
+        editor.putString("email", email)
+        editor.putString("ssn", ssn)
+        editor.apply()
     }
 }
