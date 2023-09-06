@@ -28,11 +28,11 @@ class RegisterActivity : AppCompatActivity() {
         ssnInput = findViewById(R.id.ssnInput)
         val registerButton = findViewById<Button>(R.id.registerButton)
 
-        sharedPreferences = getSharedPreferences("MyApp", Context.MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences("RegisterPrefs", Context.MODE_PRIVATE)
 
         val savedUsername = sharedPreferences.getString("username", "")
         val savedPassword = sharedPreferences.getString("password", "")
-        val savedEmail = sharedPreferences.getString("email", "")
+        val savedEmail = sharedPreferences.getString("registerEmail", "")
         val savedSSN = sharedPreferences.getString("ssn", "")
 
         usernameInput.setText(savedUsername)
@@ -86,24 +86,7 @@ class RegisterActivity : AppCompatActivity() {
 
         editor.putString("username", username)
         editor.putString("password", password)
-        editor.putString("email", email)
-        editor.putString("ssn", ssn)
-        editor.apply()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        val username = usernameInput.text.toString()
-        val password = passwordInput.text.toString()
-        val email = emailInput.text.toString()
-        val ssn = ssnInput.text.toString()
-
-        val editor = sharedPreferences.edit()
-
-        editor.putString("username", username)
-        editor.putString("password", password)
-        editor.putString("email", email)
+        editor.putString("registerEmail", email)
         editor.putString("ssn", ssn)
         editor.apply()
     }

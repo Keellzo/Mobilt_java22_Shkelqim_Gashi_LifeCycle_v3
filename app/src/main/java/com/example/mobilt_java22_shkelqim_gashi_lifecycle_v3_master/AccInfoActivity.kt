@@ -36,7 +36,7 @@ class AccInfoActivity : AppCompatActivity() {
         emailInput = findViewById(R.id.emailInput)
         occupationSpinner = findViewById(R.id.occupationSpinner)
 
-        sharedPreferences = getSharedPreferences("MyApp", Context.MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences("AccInfoPrefs", Context.MODE_PRIVATE)
 
         val occupations = arrayOf("Student", "Software Engineer", "Designer", "Other")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, occupations)
@@ -46,7 +46,7 @@ class AccInfoActivity : AppCompatActivity() {
         val savedAge = sharedPreferences.getInt("age", 0)
         val savedHasLicense = sharedPreferences.getBoolean("hasLicense", false)
         val savedGenderId = sharedPreferences.getInt("genderId", 0)
-        val savedEmail = sharedPreferences.getString("email", "")
+        val savedEmail = sharedPreferences.getString("accInfoEmail", "")
         val savedOccupation = sharedPreferences.getString("occupation", "Student")
 
         ageInput.setText(savedAge.toString())
@@ -93,7 +93,7 @@ class AccInfoActivity : AppCompatActivity() {
         editor.putInt("age", age ?: 0)
         editor.putBoolean("hasLicense", hasLicense)
         editor.putInt("genderId", selectedGenderId)
-        editor.putString("email", email)
+        editor.putString("accInfoEmail", email)
         editor.putString("occupation", selectedOccupation)
         editor.apply()
     }
