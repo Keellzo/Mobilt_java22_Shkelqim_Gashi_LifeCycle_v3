@@ -46,7 +46,7 @@ class AccInfoActivity : AppCompatActivity() {
         val savedAge = sharedPreferences.getInt("age", 0)
         val savedHasLicense = sharedPreferences.getBoolean("hasLicense", false)
         val savedGenderId = sharedPreferences.getInt("genderId", 0)
-        val savedEmail = sharedPreferences.getString("accInfoEmail", "")
+        val savedEmail = sharedPreferences.getString("accInfoEmailgit", "")
         val savedOccupation = sharedPreferences.getString("occupation", "Student")
 
         ageInput.setText(savedAge.toString())
